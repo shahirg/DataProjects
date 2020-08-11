@@ -1,0 +1,54 @@
+GARBAGE
+			/*ptr = root.firstChild;
+			prev = null;
+			index = new Indexes(i,(short) 0,(short)(allWords[i].length()));
+			insert = new TrieNode(index,null,null);
+			while(ptr != null && !(simPrefix(allWords[ptr.substr.wordIndex],allWords[i]))){//Case #1 new letter
+				prev = ptr;
+				ptr = ptr.sibling;
+			}
+			if(ptr == null) {		// Adding new prefix
+				prev.sibling = insert;
+			}*/
+			
+			/*if(prefix.equals(allWords[root.substr.wordIndex].substring(root.substr.startIndex,root.substr.endIndex))) {
+			list.addAll(compListRec(root.firstChild , allWords,prefix,list));			
+			return list;
+		}
+		else if(allWords[root.substr.wordIndex].contains(prefix)) {
+			if(root.firstChild == null) {
+				list.add(root);
+				list.addAll(compListRec(root.sibling , allWords,prefix,list));
+			}
+			else {
+				list.addAll(compListRec(root.firstChild , allWords,prefix,list));
+				list.addAll(compListRec(root.sibling , allWords,prefix,list));
+			}
+			return list;
+				
+		}*/
+		
+		
+			private static String getPrefix(String x,String y) {
+		String pre = "";
+		int min = x.length() < y.length() ? x.length():y.length();
+		for(int i = 0;i < min; i++) {
+			if(x.charAt(i) != y.charAt(i)) {
+				break;
+			}
+			pre += x.substring(i,i+1);
+		}
+		return pre;
+	}
+	
+	
+	
+	
+		public static TrieNode updateInd(TrieNode root, short start) {
+		if(root == null) {
+			return null;
+		}
+		root.substr.startIndex = start;
+		root.sibling = updateInd(root.sibling,start);
+		return root;
+	}		

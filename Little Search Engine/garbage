@@ -1,0 +1,16 @@
+			//ArrayList<Integer> indexList = insertLastOccurrence(list);
+			
+			//if(indexList != null)
+				//System.out.println("list indexes" +indexList.toString());
+		//	if(indexList == null) {
+			//	keywordsIndex.put(key, list);
+			//	continue;
+			//}
+			//int index = indexList.get(indexList.size()-1);
+			/*if(kws.get(key).frequency > list.get(index).frequency) {
+				list.add(index, list.get(list.size() -1));
+			}
+			else {
+				list.add(index + 1, list.get(list.size() -1));
+			}
+			list.remove(list.size()-1);*/

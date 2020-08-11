@@ -1,0 +1,324 @@
+/*while (poly1 != null && poly2 != null) {
+if(poly1.term.degree > poly2.term.degree) {
+	if(sum == null) {
+		sum = poly2;
+		sum = ptr;
+	}
+	else {
+		ptr.next = poly2;
+		ptr = ptr.next;
+	}
+	poly2 = poly2.next;	
+}
+else if(poly1.term.degree < poly2.term.degree) {
+	if(sum == null) {
+		sum = poly1;
+		sum = ptr;
+	}
+	else {
+		ptr.next = poly1;
+		ptr = ptr.next;
+	}
+	poly1 = poly1.next;							
+}
+else {
+	float newCoeff = poly1.term.coeff + poly2.term.coeff;
+	if(sum == null) {
+		sum = new Node(newCoeff,poly1.term.degree,null);
+		ptr = sum;
+	}
+	else {
+		ptr.next = new Node(newCoeff,poly1.term.degree,null);
+		ptr = ptr.next;
+	}
+	poly1 = poly1.next;
+	poly2 = poly2.next;
+}
+}
+while(poly1 != null) {
+ptr.next = poly1;
+poly1 = poly1.next;
+ptr = ptr.next;
+}
+while(poly2 != null) {
+ptr.next = poly2;
+poly2 = poly2.next;
+ptr = ptr.next;
+}*/
+//new code nirav
+		/*Node sum = null;
+		Node ptr = sum;
+		while(poly1 != null && poly2 != null) {
+			if(poly1.term.degree > poly2.term.degree) {
+				if(sum == null) {
+					sum = new Node(poly2.term.coeff,poly2.term.degree,null);
+					sum = ptr;
+				}
+				else {
+					ptr.next = new Node(poly2.term.coeff,poly2.term.degree,null);
+					ptr = ptr.next;
+				}
+			}
+			else if(poly1.term.degree < poly2.term.degree) {
+				if(sum == null) {
+					sum = new Node(poly1.term.coeff,poly1.term.degree,null);
+					sum = ptr;
+				}
+				else {
+					ptr.next = new Node(poly1.term.coeff,poly1.term.degree,null);
+					ptr = ptr.next;
+				}				
+			}
+			else if(poly1.term.degree == poly2.term.degree) {
+				if(sum == null) {
+					sum = new Node((poly1.term.coeff + poly2.term.coeff),poly1.term.degree,null);
+					sum = ptr;
+				}
+				else {
+					ptr.next = new Node((poly1.term.coeff + poly2.term.coeff),poly1.term.degree,null);
+					ptr = ptr.next;
+				}
+			}
+			
+		}
+		while(poly1 != null) {
+			ptr.next = poly1;
+			poly1 = poly1.next;
+			ptr = ptr.next;
+		}
+		while(poly2 != null) {
+			ptr.next = poly2;
+			poly2 = poly2.next;
+			ptr = ptr.next;
+		}*/
+
+/* works the best
+
+
+
+/* works the best
+Node ptr1 = poly1, ptr2 = poly2;
+Node ans = null, ansPtr = null, ansEnd = null;
+if(poly1 == null || poly2 == null) {return null;}
+while(ptr1 != null) {
+	while(ptr2 != null) {
+		float newCoeff = ptr1.term.coeff * ptr2.term.coeff;
+		int newDeg = ptr1.term.degree + ptr2.term.degree;
+		if(ans == null) {
+			ans = new Node(newCoeff, newDeg, null);
+			ansPtr = ans;
+			ansEnd = ans;
+			ptr2 = ptr2.next;
+		}
+		else {
+			if(newDeg > ansEnd.term.degree) {	//add big term to end edge case
+				ansEnd.next = new Node(newCoeff, newDeg, null);
+				ansEnd = ansEnd.next;
+				ptr2 = ptr2.next;
+			}
+			else {//smaller terms get inserted
+				while(ansPtr.term.degree > newDeg && ansPtr != null) {
+					ansPtr = ansPtr.next;
+				}
+				if(ansPtr.term.degree == newDeg) {
+					ansPtr.term.coeff += newCoeff;
+					ansPtr = ans;
+				}
+				else if(ansPtr.term.degree > newDeg ) {
+					Node temp = new Node(newCoeff, newDeg, ansPtr.next);
+					temp.next = ansPtr.next;
+					ansPtr.next = temp;
+					ansPtr = ans;
+				}
+				ptr2 = ptr2.next;
+			}
+		}
+	}
+	ptr2 = poly2;
+	ptr1 = ptr1.next;
+}
+//return ans;
+return removeZeros(ans);*/
+
+/*
+ * 		if(poly1 == null) {return poly2;}
+		if(poly2 == null) {return poly1;}
+		if(poly1.term.degree == poly2.term.degree) {			
+			poly1.next = add(poly1.next,poly2.next);
+			if((poly1.term.coeff+poly2.term.coeff) != 0) {	
+				poly1.term.coeff = poly1.term.coeff+poly2.term.coeff;
+				return poly1;
+			}
+			else {
+				return poly1.next;
+			}	
+		}
+		if(poly1.term.degree < poly2.term.degree) {
+			poly1.next = add(poly1.next,poly2);
+			return poly1;
+		}
+		if(poly1.term.degree > poly2.term.degree) {
+			poly2.next = add(poly1,poly2.next);
+			return poly2;		
+		}
+		return null;		
+		*/
+/*works best add
+Node sum = poly1, sumPtr = sum,ptr2 =poly2,prev = null;
+if(poly1 == null) {return poly2;}
+if(poly2 == null) {return poly1;}
+while(ptr2 != null) {
+	float addCoeff = ptr2.term.coeff;
+	int addDeg = ptr2.term.degree;
+	while(sumPtr != null ) {
+		if(sumPtr.term.degree < addDeg) {
+			if(sumPtr.next == null) {
+				sumPtr.next = new Node(addCoeff,addDeg,null);
+				break;
+			}
+			else {
+				prev = sumPtr;
+				sumPtr = sumPtr.next;
+			}						
+		}
+		else if(sumPtr.term.degree == addDeg) {					
+			sumPtr.term.coeff += addCoeff;
+			break;
+		}
+		else if(sumPtr.term.degree > addDeg){	
+			Node temp = new Node(addCoeff,addDeg,sumPtr);
+			if(prev != null) {
+				prev.next = temp;
+				sumPtr = prev;	
+			}
+			else {
+				sum = temp;
+			}
+			break;					
+		}
+		printList(sum);
+	}		
+	sumPtr = sum;
+	prev = null;
+	ptr2 = ptr2.next;
+}
+return removeZeros(sum);*/	
+
+
+/* recursive testing
+ * System.out.print("Poly1: ");
+	printList(poly1);
+	System.out.print("Poly2: ");
+	printList(poly2);
+	if(poly1 == null) {return poly2;}
+	if(poly2 == null) {return poly1;}
+	if(poly1.term.degree == poly2.term.degree) {			
+		poly1.next = add(poly1.next,poly2.next);
+		if((poly1.term.coeff+poly2.term.coeff) != 0) {
+			
+			poly1.term.coeff = poly1.term.coeff+poly2.term.coeff;
+			System.out.print("Poly1: ");
+			printList(poly1);
+			System.out.print("Poly2: ");
+			printList(poly2);
+			return poly1;
+		}
+		else {
+			System.out.print("Poly1: ");
+			printList(poly1);
+			System.out.print("Poly2: ");
+			printList(poly2);
+			return poly1.next;
+		}
+		
+	}
+	if(poly1.term.degree < poly2.term.degree) {
+		poly1.next = add(poly1.next,poly2);
+		System.out.print("Poly1: ");
+		printList(poly1);
+		System.out.print("Poly2: ");
+		printList(poly2);
+		return poly1;
+	}
+	if(poly1.term.degree > poly2.term.degree) {
+		poly2.next = add(poly1,poly2.next);
+		System.out.print("Poly1: ");
+		printList(poly1);
+		System.out.print("Poly2: ");
+		printList(poly2);
+		return poly2;		
+	}
+	return null;
+ */
+
+
+/*
+private static Node test(Node poly1, Node poly2) {
+	Node sum = null, sumPtr = null, ptr1 = poly1, ptr2 = poly2;
+	if(ptr1 == null) {return ptr2;}
+	if(ptr2 == null) {return ptr1;}
+	while(ptr1 != null && ptr2 != null) {
+		if(ptr1.term.degree == ptr2.term.degree) {
+			if(ptr1.term.coeff + ptr2.term.coeff != 0) {
+				if(sum == null) {
+					sum = new Node(ptr1.term.coeff + ptr2.term.coeff,ptr1.term.degree,null);
+					sumPtr = sum;
+				}
+				else {
+					sumPtr.next = new Node(ptr1.term.coeff + ptr2.term.coeff,ptr1.term.degree,null);
+					sumPtr = sumPtr.next;
+				}
+			}
+			ptr1 = ptr1.next;
+			ptr2 = ptr2.next;
+
+		}
+		else if(ptr1.term.degree > ptr2.term.degree) {
+			if(sum == null) {
+				sum = new Node(ptr2.term.coeff,ptr2.term.degree,null);
+				sumPtr = sum;
+			}
+			else {
+				sumPtr.next = new Node(ptr2.term.coeff,ptr2.term.degree,null);
+				sumPtr = sumPtr.next;
+			}
+			ptr2 = ptr2.next;
+		}
+		else if(ptr1.term.degree < ptr2.term.degree) {
+			if(sum == null) {
+				sum = new Node(ptr1.term.coeff,ptr1.term.degree,null);
+				sumPtr = sum;
+			}
+			else {
+				sumPtr.next = new Node(ptr1.term.coeff,ptr1.term.degree,null);
+				sumPtr = sumPtr.next;
+			}			
+			ptr1 = ptr1.next;
+		}
+	}
+	if(ptr1 != null) { sumPtr.next = ptr1;}
+	if(ptr2 != null) { sumPtr.next = ptr2;}	
+	return sum;
+}
+*/
+	private static Node removeZeros(Node poly) {
+		Node ptr = poly, prev = null;
+		while(ptr != null) {
+			if(ptr.term.coeff == 0) {
+				if(prev == null) {
+					ptr = ptr.next;
+					poly = ptr;
+				}
+				else {
+					prev.next = ptr.next;
+					ptr = ptr.next;
+				}
+			}
+			else {
+				prev = ptr;
+				ptr = ptr.next;
+			}
+			printList(poly);
+		}
+		return poly;
+	}

@@ -1,0 +1,258 @@
+System.out.println(expr);
+    		c = expr.charAt(i);
+    		if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')){
+    			name = getVar(expr.substring(i));
+    			i += name.length();
+    		}
+    		System.out.println(i);
+    		c = expr.charAt(i);
+    		if(c >= '0' && c <= '9') {
+    			num = getNum(expr.substring(i));
+    			i += num.length();
+    		}
+    		System.out.println(i);
+    		c = expr.charAt(i);
+    		if(c == '(') {
+    			arrays.add(getArray((expr.substring(i)),name,Integer.parseInt(num)));
+    			while((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+    				i++;
+    				c = expr.charAt(i);
+    			}
+    			i--;
+    		}
+    		else {
+    			Variable temp = new Variable(name);
+    			temp.value = Integer.parseInt(num);
+    			vars.add(temp);
+    		}
+    		System.out.println(i);
+    		
+    		
+  /*String name ="";
+    	int c;
+    	expr = removeSpaces(expr);
+    	for(int i = 0; i < expr.length(); i++) {
+    		c = expr.charAt(i);
+    		if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')){
+    			name = getName(expr.substring(i));
+    			i += name.length();
+    		}
+    		if(i >= expr.length()) {break;}
+    		c = expr.charAt(i);
+    		if(c == '[') {
+    			arrays.add(new Array(name));
+    		}
+    		else {
+    			vars.add(new Variable(name));
+    		}
+
+    	}*/
+    }
+    
+    	//float total = 0;
+    	/*Stack<Float> nums = new Stack<Float>();
+    	Stack<String> math = new Stack<String>();
+    	Stack<String> parends = new Stack<String>();
+    	Stack<String> recur = new Stack<String>();
+    	for(int i = 0; i < expr.length(); i++) {
+    		int c = expr.charAt(i);
+    		
+    		if(delims.indexOf(c) < 0) {
+    			System.out.println(1);
+    			if(c >= '0' && c <= '9')
+    			{
+    				System.out.println(2);
+    				String num = getNum(expr.substring(i));
+    				nums.push(Float.parseFloat(num));
+    				i += num.length() - 1; //account for moving;
+    				System.out.println((math.isEmpty()));
+    				if(!(math.isEmpty())) {
+    					System.out.println(3);
+    					//String operator = math.pop();
+    					switch (math.pop()) {
+    						case "+": nums.push(nums.pop() + nums.pop());
+    							break;
+    						case "-": nums.push(nums.pop() - nums.pop());
+    							break;
+    						case "*": nums.push(nums.pop() * nums.pop());
+    							break;
+    						case "/": nums.push(nums.pop() / nums.pop());
+    							break;
+    					}
+    				}
+    			}
+    			else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')){
+    				System.out.println(4);
+    				String name = getName(expr.substring(i));
+    				Array arr = new Array(name);
+    				Variable var = new Variable(name);
+    				
+    				for(int j = 0;j < vars.size(); j++) {
+    					System.out.println(var.equals(vars.get(j)));
+    					if(var.equals(vars.get(j))){
+    						nums.push((float) vars.get(j).value);
+    						break;
+    					}
+    				}
+    				
+    			}
+    		}
+    		else if(delims.indexOf(c) <= 5){
+    			System.out.println(5);
+    			switch (c) {
+    				case '+': math.push(Character.toString((char) c));
+    				case '-': math.push(Character.toString((char) c));
+    				case '*': math.push(Character.toString((char) c));
+    				case '/': math.push(Character.toString((char) c));
+    			}
+    		}
+    		else if(c == '('){
+    			
+
+			}   			
+    		
+    		
+    	}
+    	if(nums.isEmpty()) {return 0;}*/
+    	
+    	
+    	    		
+    		/*float a = nums.pop(), b = nums.pop();
+    		nums.push(b);
+    		nums.push(a);
+    		String poped = math.peek();
+    		System.out.println("math" + math.size());
+    		System.out.println(b-a);
+    		switch(poped) {
+    		case "+": 
+    			if(a+b > 0) {nums.push(a+b);}
+    			else if(a + b < 0) {
+				if(!(math.isEmpty())) {
+    					String sign = math.pop();
+    					if(sign.equals("-")) {math.push("+");}
+    					else { math.push("-");}
+    					nums.push(-1*(a + b));
+    				}
+    				else {
+    					nums.push(a+b);
+    				}
+    			}
+    			break;
+    		case "-": 
+   				if(b-a > 0) {
+   					System.out.println(b+" 1 "+ a);
+   					nums.push(b-a);
+   				}
+   				else if(b-a < 0) {
+   					System.out.println(!(math.isEmpty()));
+					if(!(math.isEmpty())) {
+						String sign = math.pop();
+    					if(sign.equals("-")) {math.push("+");}
+    					else { math.push("-");}
+    					System.out.println(b+" 2  "+a);
+						nums.push((nums.pop()-nums.pop()));
+					}
+					else {
+						System.out.println(b+" 3 "+a);
+						nums.push(nums.pop()-nums.pop());
+					}
+   				}
+    			break;
+    		}*/
+    		
+    private static String getNum(String in) {
+    	String x = "";
+    	for(int i = 0; i < in.length(); i++) {
+    		int c = in.charAt(i);
+    		if(c >= '0' && c <= '9'){
+    			x += in.substring(i,i+1);
+    		}
+    		else {break;}
+    	}
+    	return x;
+    }
+    private static String getName(String in) {
+    	String x = "";
+    	for(int i = 0; i < in.length(); i++) {
+    		int c = in.charAt(i);
+    		if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')){
+    			x += in.substring(i,i+1);
+    		}
+    		else {break;}
+    	}
+    	return x;
+    }
+    private static String removeSpaces(String x) {
+    	if(x.length() == 0) {return "";}
+    	else if(x.substring(0,1).equals(" ")) {
+    		return removeSpaces(x.substring(1));
+    	}
+    	else {return x.substring(0,1) + removeSpaces(x.substring(1));}
+    }
+    private static Array getArray (String x,String name,int size){
+    	Stack<Integer> vals = new Stack<Integer>();
+    	Stack<Integer> pos = new Stack<Integer>();
+    	String num;
+    	for(int i = 0; i < x.length(); i++) {
+    		int c = x.charAt(i);
+    		if(c == '(') {
+    			num = getNum(x.substring(i+1));
+    			pos.push(Integer.parseInt(num));
+    			i += num.length() - 1;
+    		}
+    		else if(c == ',') {
+    			num = getNum(x.substring(i+1));
+    			vals.push(Integer.parseInt(num));
+    			i += num.length() - 1;
+    		}
+    		else if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+    			break;
+    		}
+    	}
+    	int [] arr = new int[size];
+    	while(vals != null) {//creates array
+    		arr[pos.pop()] = vals.pop();
+    	}
+    	Array out = new Array(name);
+    	out.values = arr;
+    	return out;
+    	
+    }   
+    private static String getExp(StringTokenizer st, String in) {
+    	Stack<String> parends = new Stack<String>();
+    	parends.push(in);
+    	String out = "";
+		while(!(parends.isEmpty())) {
+			String next = st.nextToken();
+			switch(next) {
+				case "(": parends.push(next);
+					break;
+				case "[": parends.push(next);
+					break;
+				case ")": parends.pop();
+					break;
+				case "]": parends.pop();
+					break;
+				default: break;
+			}
+			if(parends.isEmpty())
+				break;
+			out += next;
+		}
+		return out;
+    }
+    
+        private static String getExpRec(StringTokenizer st, Stack<String> pars) { 	
+    	if(!(st.hasMoreTokens()))
+    		return "";
+    	
+    	String cur = st.nextToken();
+    	if(cur.equals("(") || cur.equals("[")) {
+    		pars.push(cur);
+    	}
+    	else if(cur.equals("]") || cur.equals("]")) {
+    		pars.pop();
+    	}
+		if(pars.isEmpty()) { return "";}
+		return cur + getExpRec(st,pars);
+	} 
